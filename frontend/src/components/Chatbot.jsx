@@ -1,4 +1,5 @@
 import { useState } from "react";
+import './Chatbot.css';
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([]);
@@ -12,30 +13,49 @@ const Chatbot = () => {
     setInput("");
 
     setTimeout(() => {
-      setMessages((prev) => [...prev, { text: "This is the bot answer!", sender: "bot" }]);
+      setMessages((prev) => [
+        ...prev,
+        { text: "This is the bot answer!", sender: "bot" },
+      ]);
     }, 1000);
   };
 
   return (
-    <div style={{ width: "300px", margin: "auto", padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }}>
-      <div style={{ height: "300px", overflowY: "auto", borderBottom: "1px solid #ddd", marginBottom: "10px" }}>
+    <div className="chatbot-container">
+      <header className="chatbot-header">
+        <h1 className="chatbot-title">AI PC-Builder Chatbot</h1>
+        <nav className="chatbot-nav">
+          <a href="#">Home</a>
+          <a href="#">About</a>
+          <a href="#">Contact</a>
+        </nav>
+      </header>
+
+      <div className="chatbox">
         {messages.map((msg, index) => (
-          <div key={index} style={{ textAlign: msg.sender === "user" ? "right" : "left", marginBottom: "5px" }}>
-            <strong>{msg.sender === "user" ? "You: " : "AI PC-Builder: "}</strong>
+          <div
+            key={index}
+            className={`message ${msg.sender === "user" ? "user" : "bot"}`}
+          >
+            <strong>
+              {msg.sender === "user" ? "You:" : "AI PC-Builder:"}
+            </strong>{" "}
             {msg.text}
           </div>
         ))}
       </div>
-      <input
-        type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={(e) => e.key === "Enter" && handleSend()}
-        style={{ width: "80%", padding: "5px" }}
-      />
-      <button onClick={handleSend} style={{ width: "18%", marginLeft: "2%" }}>
-        Send
-      </button>
+
+      <div className="input-box">
+        <input
+          type="text"
+          placeholder="Type your message..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSend()}
+          className="input-text"
+        />
+        <button onClick={handleSend} className="input-button">Send</button>
+      </div>
     </div>
   );
 };

@@ -1,9 +1,10 @@
-import Chatbot from "./components/Chatbot";
+import React from 'react';
+import Chatbot from './components/Chatbot';
+import './App.css';
 
 function App() {
   return (
-    <div>
-      <h1 style={{ textAlign: "center" }}>AI PC Builder Chatbot</h1>
+    <div className="App">
       <Chatbot />
     </div>
   );
