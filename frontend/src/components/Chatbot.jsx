@@ -12,7 +12,7 @@ const Chatbot = () => {
     setInput("");
 
     setTimeout(() => {
-      setMessages((prev) => [...prev, { text: "Це відповідь бота!", sender: "bot" }]);
+      setMessages((prev) => [...prev, { text: "This is the bot answer!", sender: "bot" }]);
     }, 1000);
   };
 
@@ -21,7 +21,7 @@ const Chatbot = () => {
       <div style={{ height: "300px", overflowY: "auto", borderBottom: "1px solid #ddd", marginBottom: "10px" }}>
         {messages.map((msg, index) => (
           <div key={index} style={{ textAlign: msg.sender === "user" ? "right" : "left", marginBottom: "5px" }}>
-            <strong>{msg.sender === "user" ? "Ви: " : "Бот: "}</strong>
+            <strong>{msg.sender === "user" ? "You: " : "AI PC-Builder: "}</strong>
             {msg.text}
           </div>
         ))}
