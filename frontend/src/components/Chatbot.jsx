@@ -1,5 +1,6 @@
 import { useState } from "react";
-import './Chatbot.css';
+import { Link } from "react-router-dom";
+import "./Chatbot.css";
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([]);
@@ -25,9 +26,9 @@ const Chatbot = () => {
       <header className="chatbot-header">
         <h1 className="chatbot-title">AI PC-Builder Chatbot</h1>
         <nav className="chatbot-nav">
-          <a href="#">Home</a>
-          <a href="#">About</a>
-          <a href="#">Contact</a>
+          <Link to="/">Home</Link>
+          <Link to="/about">About</Link>
+          <Link to="/contact">Contact</Link>
         </nav>
       </header>
 

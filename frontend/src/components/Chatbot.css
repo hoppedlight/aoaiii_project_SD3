@@ -16,6 +16,15 @@ body, html {
     background-blend-mode: overlay;
 }
 
+.chatbot-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    padding-top: 75px;
+}
+
 .chatbot-header {
     position: fixed;
     top: 0;
@@ -68,15 +77,6 @@ body, html {
 
 .chatbot-nav a:hover::after {
     width: 100%;
-}
-
-.chatbot-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    height: 100vh;
-    padding-top: 75px;
 }
 
 .chatbox {
