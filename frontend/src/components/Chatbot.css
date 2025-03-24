@@ -16,11 +16,6 @@ body, html {
     background-blend-mode: overlay;
 }
 
-#root {
-    width: 100%;
-    height: 100%;
-}
-
 .chatbot-header {
     position: fixed;
     top: 0;
