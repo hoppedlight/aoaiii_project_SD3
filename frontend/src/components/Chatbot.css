@@ -170,7 +170,6 @@ body, html {
     transform: scale(0.95);
 }
 
-/* Scrollbar Styling */
 .chatbox::-webkit-scrollbar {
     width: 8px;
 }
