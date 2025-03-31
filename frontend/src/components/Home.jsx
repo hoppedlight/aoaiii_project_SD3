@@ -1,29 +1,23 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Home.css";
 
 const Home = () => {
-  const navigate = useNavigate();
-
   return (
-    <div className="chatbot-container home-container">
-      <header className="chatbot-header">
-        <h1 className="chatbot-title">AI PC-Builder Chatbot</h1>
-        <nav className="chatbot-nav">
-          <a href="/">Home</a>
-          <a href="#">About</a>
-          <a href="#">Contact</a>
+    <div className="home-container">
+      <header className="header">
+        <nav className="header-nav">
+          <Link to="/">Home</Link>
+          <Link to="/about">About</Link>
+          <Link to="/contact">Contact</Link>
         </nav>
       </header>
-      
+
       <div className="home-content">
         <h2 className="home-title">Welcome to AI PC-Builder Chatbot!</h2>
         <p className="home-description">This website helps you build the perfect PC for your needs.</p>
         <p className="home-description">Get recommendations, compare components, and optimize your setup effortlessly!</p>
+        <Link to="/chatbot" className="home-button">Start Chat</Link>
       </div>
-      
-      <button className="chatbot-button home-button" onClick={() => navigate("/chatbot")}>
-        Start Chat
-      </button>
     </div>
   );
 };
