@@ -3,6 +3,7 @@ import Chatbot from "./components/Chatbot";
 import Home from "./components/Home";
 import About from "./components/About";
 import Contact from "./components/Contact";
+import PCParts from "./components/PCParts";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/chatbot" element={<Chatbot />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/pcparts" element={<PCParts />} />
       </Routes>
     </Router>
   );
