@@ -119,3 +119,135 @@ body, html {
     background-color: #0056b3;
     transform: scale(1.05);
 }
+
+.more-info {
+    margin-top: 20px;
+    padding: 12px 25px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #0099ff;
+    color: white !important;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 153, 255, 0.4);
+}
+
+.more-info:hover {
+    background-color: #007acc;
+    transform: scale(1.05);
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.modal-content h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.modal-content p {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.modal-content button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #ff4c4c;
+    color: white !important;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.modal-content button:hover {
+    background-color: #cc0000;
+}
+
+.quote {
+    margin-top: 20px;
+    font-size: 18px;
+    font-style: italic;
+    color: #ccc !important;
+}
+
+.contact-form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.contact-input, .contact-textarea {
+    width: 80%;
+    padding: 10px;
+    font-size: 18px;
+    border: 2px solid #0099ff;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.contact-input:focus, .contact-textarea:focus {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #007BFF;
+}
+
+.contact-textarea {
+    height: 120px;
+    resize: none;
+}
+
+.contact-button {
+    margin-top: 10px;
+    padding: 12px 25px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
+}
+
+.contact-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.site-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}

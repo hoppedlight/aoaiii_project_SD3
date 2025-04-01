@@ -5,18 +5,19 @@ const Home = () => {
   return (
     <div className="home-container">
       <header className="header">
+      <div className="site-title">AI PC Builder</div>
         <nav className="header-nav">
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/contact">Contact</Link>
+          <Link to="/">🏠Home</Link>
+          <Link to="/about">❓About</Link>
+          <Link to="/contact">📞Contact</Link>
         </nav>
       </header>
 
       <div className="home-content">
-        <h2 className="home-title">Welcome to AI PC-Builder Chatbot!</h2>
+        <h2 className="home-title">🔧Welcome to AI PC-Builder Chatbot!</h2>
         <p className="home-description">This website helps you build the perfect PC for your needs.</p>
         <p className="home-description">Get recommendations, compare components, and optimize your setup effortlessly!</p>
-        <Link to="/chatbot" className="home-button">Start Chat</Link>
+        <Link to="/chatbot" className="home-button">🖥️💡Start Chat</Link>
       </div>
     </div>
   );

@@ -24,10 +24,11 @@ const Chatbot = () => {
   return (
     <div className="home-container">
       <header className="header">
+      <div className="site-title">AI PC Builder</div>
         <nav className="header-nav">
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/contact">Contact</Link>
+          <Link to="/">🏠Home</Link>
+          <Link to="/about">❓About</Link>
+          <Link to="/contact">📞Contact</Link>
         </nav>
       </header>
 
@@ -54,7 +55,7 @@ const Chatbot = () => {
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
           className="input-text"
         />
-        <button onClick={handleSend} className="input-button">Send</button>
+        <button onClick={handleSend} className="input-button">📤</button>
       </div>
     </div>
   );
