@@ -14,7 +14,7 @@ const Contact = () => {
 
       <div className="home-content">
         <h2 className="home-title">Get in Touch</h2>
-        <p className="home-description">Email: support@aipcbuilder.com</p>
+        <p className="home-description">Email: MykhailoDmytro@aipcbuilder.com</p>
         <p className="home-description">Phone: +1 234 567 890</p>
       </div>
     </div>

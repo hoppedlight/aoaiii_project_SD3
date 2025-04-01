@@ -22,10 +22,9 @@ const Chatbot = () => {
   };
 
   return (
-    <div className="chatbot-container">
-      <header className="chatbot-header">
-        <h1 className="chatbot-title">AI PC-Builder Chatbot</h1>
-        <nav className="chatbot-nav">
+    <div className="home-container">
+      <header className="header">
+        <nav className="header-nav">
           <Link to="/">Home</Link>
           <Link to="/about">About</Link>
           <Link to="/contact">Contact</Link>
