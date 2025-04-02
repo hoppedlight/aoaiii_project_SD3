@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 class ScrapePCPartPicker(APIView):
-  def get(self, request, format=None):
+  def get(self, request, format = None):
     query = request.query_params.get("search", "")
     
     if not query:
@@ -22,18 +22,24 @@ class ScrapePCPartPicker(APIView):
       return Response({"error" : f"Failed to fetch data, status code : {response.status_code}"}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
     
     soup = BeautifulSoup(response.content, "html.parser")
+    
+    # print(soup.prettify())
+    with open("pcpartpicker_response.html", "w", encoding = "utf-8") as file:
+      file.write(soup.prettify())
+    
     products = []
     product_items = soup.find_all("li", class_ = "product")
     for product in product_items:
       name = product.find("a", class_ = "product-name")
       price = product.find("div", class_ = "price")
-      
+
       if name and price:
         product_data = {
-            "name" : name.get_text(strip = True),
-            "price" : price.get_text(strip = True),
-            "url" : "https://pcpartpicker.com" + name['href'],
+          "name": name.get_text(strip = True),
+          "price": price.get_text(strip = True),
+          "url": "https://pcpartpicker.com" + name["href"],
         }
         products.append(product_data)
-        
-      return Response({"parts" : products})
+
+    return Response({"parts": products})
+

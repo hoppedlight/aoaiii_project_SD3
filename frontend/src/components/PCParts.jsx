@@ -27,6 +27,16 @@ function PCParts() {
   const debouncedSearchTerm = useDebounce(searchTerm, 1000);
 
   useEffect(() => {
+    if (rateLimited) {
+      const timer = setTimeout(() => {
+        setRateLimited(false);
+      }, 5 * 60 * 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [rateLimited]);
+
+  useEffect(() => {
     if (!debouncedSearchTerm || rateLimited) {
       setParts([]);
       setLoading(false);
@@ -43,32 +53,25 @@ function PCParts() {
       .then((response) => {
         if (response.data.parts && response.data.parts.length > 0) {
           setParts(response.data.parts);
+          setError(null);
         } else {
           setParts([]);
           setError("No parts found.");
         }
-        setLoading(false);
       })
       .catch((error) => {
         if (error.response && error.response.status === 429) {
           setRateLimited(true);
           setError("Rate limit exceeded. Please wait and try again later.");
-          setTimeout(() => setRateLimited(false), 5 * 60 * 1000);
         } else {
           setError("Error fetching parts.");
         }
-        setLoading(false);
         console.error("Error fetching parts:", error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [debouncedSearchTerm, rateLimited]);
-
-  if (loading) {
-    return <p>Loading parts...</p>;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
 
   return (
     <div>
@@ -84,16 +87,19 @@ function PCParts() {
         />
       </div>
 
+      {loading && <p>Loading parts...</p>}
+      {error && <p>{error}</p>}
+
+      {!loading && !error && parts.length === 0 && searchTerm && (
+        <p>No parts found.</p>
+      )}
+
       <ul>
-        {parts.length > 0 ? (
-          parts.map((part, index) => (
-            <li key={part.url || index}>
-              <strong>{part.name}</strong> - {part.price || "N/A"}
-            </li>
-          ))
-        ) : (
-          <p>No parts found.</p>
-        )}
+        {parts.map((part, index) => (
+          <li key={part.url || index}>
+            <strong>{part.name}</strong> - {part.price || "N/A"}
+          </li>
+        ))}
       </ul>
     </div>
   );
