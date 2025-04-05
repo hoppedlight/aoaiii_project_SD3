@@ -26,10 +26,6 @@ const Home = () => {
         <Link to="/chatbot" className="home-button">
           🖥️💡Start Chat
         </Link>
-
-        <Link to="/pcparts" className="home-button">
-          🖥️ View PC Parts
-        </Link>
       </div>
     </div>
   );

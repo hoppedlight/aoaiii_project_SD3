@@ -1,45 +1,33 @@
-import requests
-from bs4 import BeautifulSoup
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
+# views.py
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse, HttpResponseNotAllowed
+import google.generativeai as genai
+import json
+import os
 
-class ScrapePCPartPicker(APIView):
-  def get(self, request, format = None):
-    query = request.query_params.get("search", "")
-    
-    if not query:
-      return Response({"error" : "Search term is required"}, status = status.HTTP_400_BAD_REQUEST)
-    
-    query = query.replace(" ", "+")
-    url = f"https://pcpartpicker.com/products/cpu/#s=price+asc&q={query}"
-    headers = {
-        "User-Agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
-    }
-    response = requests.get(url, headers = headers)
-    
-    if response.status_code != 200:
-      return Response({"error" : f"Failed to fetch data, status code : {response.status_code}"}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
-    soup = BeautifulSoup(response.content, "html.parser")
-    
-    # print(soup.prettify())
-    with open("pcpartpicker_response.html", "w", encoding = "utf-8") as file:
-      file.write(soup.prettify())
-    
-    products = []
-    product_items = soup.find_all("li", class_ = "product")
-    for product in product_items:
-      name = product.find("a", class_ = "product-name")
-      price = product.find("div", class_ = "price")
+genai.configure(api_key = "AIzaSyCAHPBzfiJ7GSx5ZDH8VuAF-60HDaoCUYE")
 
-      if name and price:
-        product_data = {
-          "name": name.get_text(strip = True),
-          "price": price.get_text(strip = True),
-          "url": "https://pcpartpicker.com" + name["href"],
-        }
-        products.append(product_data)
+@csrf_exempt
+def ai_pc_builder(request):
+    if request.method != "POST":
+        return HttpResponseNotAllowed(["POST"], "Only POST method allowed")
 
-    return Response({"parts": products})
+    try:
+        data = json.loads(request.body)
+        prompt = data.get("prompt", "").strip()
 
+        if not prompt:
+            return JsonResponse({"error": "Empty prompt"}, status=400)
+        
+        # print(f"HUI ; {list(genai.list_models())}")
+
+        model = genai.GenerativeModel("models/gemini-1.5-pro")
+        formatted_prompt = f"You are an AI PC builder. Help with: {prompt}"
+        response = model.generate_content(formatted_prompt)
+
+        return JsonResponse({"response": response.text})
+
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return JsonResponse({"error": str(e)}, status=500)
