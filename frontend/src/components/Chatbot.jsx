@@ -1,10 +1,20 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Chatbot.css";
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+
+  const endOfMessagesRef = useRef(null);
+
+  const scrollToBottom = () => {
+    endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -27,19 +37,23 @@ const Chatbot = () => {
       if (data.response) {
         setMessages((prev) => [
           ...prev,
-          { text: data.response, sender: "bot" },
+          { text: data.response, sender: "bot", animated: true },
         ]);
       } else {
         setMessages((prev) => [
           ...prev,
-          { text: "Sorry, something went wrong.", sender: "bot" },
+          {
+            text: "Sorry, something went wrong.",
+            sender: "bot",
+            animated: true,
+          },
         ]);
       }
     } catch (err) {
       console.error(err);
       setMessages((prev) => [
         ...prev,
-        { text: "Error connecting to AI.", sender: "bot" },
+        { text: "Error connecting to AI.", sender: "bot", animated: true },
       ]);
     }
   };
@@ -59,12 +73,15 @@ const Chatbot = () => {
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`message ${msg.sender === "user" ? "user" : "bot"}`}
+            className={`message ${msg.sender === "user" ? "user" : "bot"} ${
+              msg.animated ? "new" : ""
+            }`}
           >
             <strong>{msg.sender === "user" ? "You:" : "AI PC-Builder:"}</strong>{" "}
             {msg.text}
           </div>
         ))}
+        <div ref={endOfMessagesRef} />
       </div>
 
       <div className="input-box">

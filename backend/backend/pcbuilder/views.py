@@ -28,4 +28,4 @@ def ai_pc_builder(request):
   except Exception as e:
     import traceback
     traceback.print_exc()
-    return JsonResponse({"error" : str(e)}, status=500)
+    return JsonResponse({"error" : str(e)}, status = 500)
