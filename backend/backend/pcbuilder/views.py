@@ -1,6 +1,5 @@
-# views.py
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse, HttpResponseNotAllowed
+from django.http import JsonResponse
 import google.generativeai as genai
 import json
 from decouple import config
@@ -9,23 +8,24 @@ genai.configure(api_key = config("GEMINI_API_KEY"))
 
 @csrf_exempt
 def ai_pc_builder(request):
-  if request.method != "POST":
-    return HttpResponseNotAllowed(["POST"], "Only POST method allowed")
-  
-  try:
-    data = json.loads(request.body)
-    prompt = data.get("prompt", "").strip()
-    
-    if not prompt:
-      return JsonResponse({"error": "Empty prompt"}, status = 400)
-    
-    model = genai.GenerativeModel("models/gemini-1.5-pro")
-    formatted_prompt = f"You are an AI PC builder. Provide from one to two options, in a 30-50 words sum up everything about your suggestion build, or even about parts you have picked. Also provide the prices for PC parts. Do not use bold or italic text, use plain text. Help with : {prompt}"
-    response = model.generate_content(formatted_prompt)
-    
-    return JsonResponse({"response" : response.text})
-  
-  except Exception as e:
-    import traceback
-    traceback.print_exc()
-    return JsonResponse({"error" : str(e)}, status = 500)
+  if request.method == "POST":
+    try:
+      data = json.loads(request.body)
+      history = data.get("history", [])
+      prompt = build_prompt_from_history(history)
+      
+      model = genai.GenerativeModel("models/gemini-1.5-pro")
+      response = model.generate_content(prompt)
+      return JsonResponse({"response" : response.text})
+    except Exception as e:
+      print(e)
+      return JsonResponse({"error" : str(e)}, status = 500)
+  return JsonResponse({"error" : "Only POST allowed"}, status = 405)
+
+def build_prompt_from_history(history):
+  conversation = ""
+  for msg in history:
+    sender = "User" if msg["sender"] == "user" else "AI"
+    conversation += f"{sender}: {msg['text']}\n"
+  conversation += "AI:"
+  return conversation

@@ -29,7 +29,7 @@ const Chatbot = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt: input }),
+        body: JSON.stringify({ prompt: input, history: newMessages }),
       });
 
       const data = await response.json();
