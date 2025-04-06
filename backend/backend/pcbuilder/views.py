@@ -20,7 +20,7 @@ def ai_pc_builder(request):
       return JsonResponse({"error": "Empty prompt"}, status = 400)
     
     model = genai.GenerativeModel("models/gemini-1.5-pro")
-    formatted_prompt = f"You are an AI PC builder. Provide from one to two options, in a few words sum up everything about your suggestion build. Do not use bold or italic text, use plain text. Help with : {prompt}"
+    formatted_prompt = f"You are an AI PC builder. Provide from one to two options, in a 30-50 words sum up everything about your suggestion build, or even about parts you have picked. Do not use bold or italic text, use plain text. Help with : {prompt}"
     response = model.generate_content(formatted_prompt)
     
     return JsonResponse({"response" : response.text})
