@@ -2,6 +2,21 @@ import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Chatbot.css";
 
+const TypewriterMessage = ({ text }) => {
+  const [displayedText, setDisplayedText] = useState("");
+  useEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      setDisplayedText((prev) => prev + text.charAt(index));
+      index++;
+      if (index >= text.length) clearInterval(interval);
+    }, 10);
+    return () => clearInterval(interval);
+  }, [text]);
+
+  return <span>{displayedText}</span>;
+};
+
 const Chatbot = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -76,9 +91,14 @@ const Chatbot = () => {
             className={`message ${msg.sender === "user" ? "user" : "bot"} ${
               msg.animated ? "new" : ""
             }`}
+            style={{ textAlign: "left" }}
           >
             <strong>{msg.sender === "user" ? "You:" : "AI PC-Builder:"}</strong>{" "}
-            {msg.text}
+            {msg.animated && msg.sender === "bot" ? (
+              <TypewriterMessage text={msg.text} />
+            ) : (
+              msg.text
+            )}
           </div>
         ))}
         <div ref={endOfMessagesRef} />
